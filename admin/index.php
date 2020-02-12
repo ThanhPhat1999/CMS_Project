@@ -29,8 +29,7 @@
 
 </head>
 
-<body>
-
+<body>    
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -223,7 +222,6 @@
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
