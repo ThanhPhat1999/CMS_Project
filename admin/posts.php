@@ -11,35 +11,35 @@
                         Welcome to Admin
                         <small>Author</small>
                     </h1>
+                    <?php
+                        if(isset($_GET['source']))
+                        {
+                            $source = $_GET['source'];
+                        }
+                        else {
+                            $source = '';
+                        }
 
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Author</th>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th>Image</th>
-                                <th>Tags</th>
-                                <th>Comments</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Thành Phát</td>
-                                <td>Angular 9</td>
-                                <td>AngularJS</td>
-                                <td>Pending</td>
-                                <td>image.jpg</td>
-                                <td>HTML, CSS, CLI, Angular, Thành Phát</td>
-                                <td>Khoá học này rất hay</td>
-                                <td>14 - 2 - 2020</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        switch ($source) {
+                            case 'add_post':
+                                include "includes/add_post.php";
+                                break;
+                            case 'edit_post':
+                                include "includes/edit_post.php";
+                                break;
+                            case '200':
+                                echo "NICE 200";
+                                break;
+
+                            default:
+                                include "includes/view_all_posts.php";
+                                break;
+                        }
+                    
+                    
+                    
+                    
+                    ?>
                 </div>
             </div>
             <!-- /.row -->
