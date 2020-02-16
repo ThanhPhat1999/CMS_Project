@@ -1,8 +1,7 @@
 <form action="" method="post">
-    <div class="form-group">
-        <label for="cat_title">Edit Categories</label>
-        <!-- Edit -->
-        <?php
+
+    <!-- Edit -->
+    <?php
                                     if(isset($_GET['edit']))
                                     {
                                         $cate_id = $_GET['edit'];
@@ -16,12 +15,16 @@
                                             $cat_id = $row['cat_id'];
                                             $cat_title = $row['cat_title'];
                                         ?>
-
+    <div class="form-group">
+        <label for="cat_title">Edit Categories</label>
         <input value="<?php if(isset($cat_title)){echo $cat_title;}?>" type="text" name="cat_title"
             class="form-control">
-
-        <?php }}?>
-        <?php
+    </div>
+    <div class="form-group">
+        <input type="submit" name="update" value="Edit" class="btn btn-warning">
+    </div>
+    <?php }}?>
+    <?php
                                 if(isset($_POST['update']))
                                 {
                                     $the_cate_title = $_POST['cat_title'];
@@ -36,8 +39,4 @@
 
                                 }
                             ?>
-    </div>
-    <div class="form-group">
-        <input type="submit" name="update" value="Edit" class="btn btn-warning">
-    </div>
 </form>

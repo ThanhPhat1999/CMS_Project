@@ -30,11 +30,12 @@
                         
                         <!-- Update Categories -->
                         <?php 
-                            if(isset($_GET['edit']))
-                            {
-                                $cat_id = $_GET['edit'];
-                                include "includes/update_categories.php";
-                            }
+                            // if(isset($_GET['edit']))
+                            // {
+                            //     $cat_id = $_GET['edit'];
+                            //     include "includes/update_categories.php";
+                            // }
+                            include "includes/update_categories.php";
                         ?>
                     </div>
 
