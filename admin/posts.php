@@ -35,10 +35,6 @@
                                 include "includes/view_all_posts.php";
                                 break;
                         }
-                    
-                    
-                    
-                    
                     ?>
                 </div>
             </div>

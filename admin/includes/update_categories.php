@@ -36,7 +36,7 @@
                                     {
                                         die('Query Failed' .mysqli_error());
                                     }
-
+                                    header("Location: categories.php");
                                 }
                             ?>
 </form>
