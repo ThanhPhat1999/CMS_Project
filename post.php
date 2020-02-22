@@ -39,7 +39,6 @@
             <img class="img-responsive" src="images/<?php echo $post_image?>" alt="">
             <hr>
             <p><?php echo $post_content?></p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
             <?php }?>
             <hr>
             <!-- Blog Comments -->
@@ -57,6 +56,10 @@
                     $comment_query = mysqli_query($connection, $query);
 
                     comfirmQuery($comment_query);
+
+                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                    $query .= "WHERE post_id = $the_post_id";
+                    $update_comment_count = mysqli_query($connection, $query);
                 }
             ?>
             <!-- Comments Form -->
@@ -64,7 +67,7 @@
                 <h4>Leave a Comment:</h4>
                 <form action="" method="post" role="form">
                     <div class="form-group">
-                        <label for="comment_author">Author</label>
+                        <label for="comment_author">Name</label>
                         <input type="text" name="comment_author" class="form-control">
                     </div>
                     <div class="form-group">

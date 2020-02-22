@@ -12,12 +12,12 @@
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = 4;
+        $post_comment_count = 0;
 
         move_uploaded_file($post_image_temp, "../images/$post_image"); //di chuyển hình ảnh từ biến tạm sang biết $post_image
 
         $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-        $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
+        $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', {$post_comment_count}, '{$post_status}')";
 
         $create_post_query = mysqli_query($connection, $query);
 
@@ -54,7 +54,11 @@
     </div>
     <div class="form-group">
         <label for="post_status">Post Status</label>
-        <input type="text" name="post_status" class="form-control">
+        <select name="post_status" id="" class="form-control">
+            <option value="">Select Options</option>
+            <option value="Publish">Publish</option>
+            <option value="Draft">Draft</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="post_image">Post Image</label>
