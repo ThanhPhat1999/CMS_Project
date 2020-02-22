@@ -94,8 +94,18 @@
     </div>
     <div class="form-group">
         <label for="post_status">Post Status</label>
-        <input type="text" value="<?php if(isset($post_status)){ echo $post_status; }?>" name="post_status"
-            class="form-control">
+        <select name="post_status" id="" class="form-control">
+            <option value="<?php if(isset($post_status)){ echo $post_status; }?>"><?php echo $post_status?></option>
+            <?php
+                if($post_status == 'Publish')
+                {
+                    echo "<option value='Draft'>Draft</option>";
+                }
+                else {
+                    echo "<option value='Publish'>Publish</option>";
+                }
+            ?>
+        </select>
     </div>
     <div class="form-group">
         <label for="post_image">Post Image</label>

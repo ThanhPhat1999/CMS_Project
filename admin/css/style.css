@@ -1,0 +1,16 @@
+@media only screen and (max-width: 300px) {
+    #chart_wrap {
+        position: relative;
+        padding-bottom: 100%;
+        height: 0;
+        overflow:hidden;
+    }
+    
+    #piechart {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width:100%;
+        height:500px;
+    }
+}
