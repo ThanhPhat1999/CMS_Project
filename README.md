@@ -3,3 +3,5 @@
 * Front - end: HTML, CSS, JS
 * Back - end: PHP thuần
 * Database: MySQL
+* Tên đăng nhập Admin: admin
+* Password Admin: admin
