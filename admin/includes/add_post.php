@@ -23,7 +23,7 @@
 
         comfirmQuery($create_post_query);
 
-        header("Location: posts.php");
+        echo "<p class='bg-success'>Add Success: <a href='posts.php'>View Posts</a></p>";
     }
 ?>
 <form action="" method="post" enctype="multipart/form-data">
@@ -70,7 +70,7 @@
     </div>
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" name="post_content" rows="10" cols="30"></textarea>
+        <textarea class="form-control" name="post_content" id="body" rows="40" cols="30"></textarea>
     </div>
     <div class="form-group">
         <input type="submit" name="create_post" value="Publish Post" class="btn btn-primary">

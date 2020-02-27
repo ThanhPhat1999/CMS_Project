@@ -61,7 +61,7 @@
         $update_post = mysqli_query($connection, $query);
         comfirmQuery($update_post);
 
-        header("Location: posts.php");
+        echo "<p class='bg-success'>Edit Success: <a href='../post.php?p_id=$the_post_id'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></p>";
     }
 ?>
 <form action="" method="post" enctype="multipart/form-data">
@@ -119,7 +119,7 @@
     </div>
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" name="post_content" rows="10" cols="30">
+        <textarea class="form-control" name="post_content" id="body" rows="10" cols="30">
             <?php if(isset($post_content)){ echo $post_content; }?>
         </textarea>
     </div>

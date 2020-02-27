@@ -1,22 +1,37 @@
-<div class="table-responsive">
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Image</th>
-            <th>Tags</th>
-            <th>Comments</th>
-            <th>Date</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
+<form action="" method="post">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <div id="bulkOptionContainer" class="form-group col-xs-4">
+                <select name="" id="" class="form-control">
+                    <option value="">Select Options</option>
+                    <option value="">Publish</option>
+                    <option value="">Draft</option>
+                    <option value="">Delete</option>
+                </select>
+            </div>
+            <div class="col-xs-8">
+                <input type="submit" name="submit" value="Apply" class="btn btn-success">
+                <a href="posts.php?source=add_post" class="btn btn-primary">Add New</a>
+            </div>
+
+            <thead>
+                <tr>
+                    <th><input id="selectAllBoxes" type="checkbox"></th>
+                    <!-- <th>Id</th> -->
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Image</th>
+                    <th>Tags</th>
+                    <th>Comments</th>
+                    <th>Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
                             $query = "SELECT * FROM posts";
                             $select_all_posts_query = mysqli_query($connection, $query);
 
@@ -31,9 +46,15 @@
                                 $post_comment_count = $row['post_comment_count'];
                                 $post_date = $row['post_date'];
                                 echo "<tr>";
-                                echo "<td>{$post_id}</td>";
+                                ?>
+                                
+                                <td><input class="checkBoxes" type="checkbox"></td>
+
+                                <?php
+                                // echo "<td>{$post_id}</td>";
                                 echo "<td>{$post_author}</td>";
                                 echo "<td>{$post_title}</td>";
+                            
 
                             $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
                             $select_category_title = mysqli_query($connection, $query);
@@ -54,7 +75,7 @@
                                 echo "</tr>";
                             }
                         ?>
-        <?php
+                <?php
             if(isset($_GET['delete']))
             {
                 $the_post_id = $_GET['delete'];
@@ -73,6 +94,7 @@
         
         
         ?>
-    </tbody>
-</table>
-</div>
+            </tbody>
+        </table>
+    </div>
+</form>
