@@ -1,14 +1,14 @@
 <?php
     if(isset($_POST['create_user']))
     {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
-        $user_role = $_POST['user_role'];
+        $username       =   $_POST['username'];
+        $password       =   $_POST['password'];
+        $user_firstname =   $_POST['user_firstname'];
+        $user_lastname  =   $_POST['user_lastname'];
+        $user_email     =   $_POST['user_email'];
+        $user_role      =   $_POST['user_role'];
 
-        $query = "INSERT INTO users(username, password, user_firstname, user_lastname, user_email, user_role) ";
+        $query  = "INSERT INTO users(username, password, user_firstname, user_lastname, user_email, user_role) ";
         $query .= "VALUES('{$username}', '{$password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}')";
 
         $create_user_query = mysqli_query($connection, $query);

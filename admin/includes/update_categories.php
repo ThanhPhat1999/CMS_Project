@@ -12,8 +12,8 @@
 
                                         while($row = mysqli_fetch_assoc($select_cate_edit_query))
                                         {
-                                            $cat_id = $row['cat_id'];
-                                            $cat_title = $row['cat_title'];
+                                            $cat_id     = $row['cat_id'];
+                                            $cat_title  = $row['cat_title'];
                                         ?>
     <div class="form-group">
         <label for="cat_title">Edit Categories</label>
@@ -28,7 +28,7 @@
                                 if(isset($_POST['update']))
                                 {
                                     $the_cate_title = $_POST['cat_title'];
-                                    $query = "UPDATE categories SET cat_title = '{$the_cate_title}' ";
+                                    $query  = "UPDATE categories SET cat_title = '{$the_cate_title}' ";
                                     $query .= "WHERE cat_id = {$cate_id}";
 
                                     $update_query = mysqli_query($connection, $query);

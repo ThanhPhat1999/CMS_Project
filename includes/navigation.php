@@ -19,13 +19,17 @@
                         $query = "SELECT * FROM categories";
                         $select_all_categories_query = mysqli_query($connection, $query);
 
-                        while($row = mysqli_fetch_assoc($select_all_categories_query)){
-                            $cate_id = $row['cat_id'];
-                            $cate_title = $row['cat_title'];
+                        while($row = mysqli_fetch_assoc($select_all_categories_query))
+                        {
+
+                            $cate_id    =   $row['cat_id'];
+                            $cate_title =   $row['cat_title'];
+
                             echo " <li><a href='#'>{$cate_title}</a></li>";
                         }
                     ?>
                 <li><a href="admin">Admin</a></li>
+                <li><a href="registration.php">Registration</a></li>
 
                 <?php
                     if(isset($_SESSION['user_role']))
