@@ -7,17 +7,17 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <?php
-                    $query = "SELECT * FROM posts WHERE post_status = 'Publish'";
+                    $query = "SELECT * FROM posts WHERE post_status = 'publish'";
                     $select_all_post_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_post_query))
                     {
-                        $post_id = $row['post_id'];
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
-                        $post_date = $row['post_date'];
-                        $post_image = $row['post_image'];
-                        $post_content = substr($row['post_content'],0, 250);
+                        $post_id        =   $row['post_id'];
+                        $post_title     =   $row['post_title'];
+                        $post_author    =   $row['post_author'];
+                        $post_date      =   $row['post_date'];
+                        $post_image     =   $row['post_image'];
+                        $post_content   =   substr($row['post_content'],0, 250);
                     ?>
 
                 <h1 class="page-header">

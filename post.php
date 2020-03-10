@@ -16,11 +16,11 @@
 
                     while($row = mysqli_fetch_assoc($select_all_post_query))
                     {
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
-                        $post_date = $row['post_date'];
-                        $post_image = $row['post_image'];
-                        $post_content = $row['post_content'];
+                        $post_title     =   $row['post_title'];
+                        $post_author    =   $row['post_author'];
+                        $post_date      =   $row['post_date'];
+                        $post_image     =   $row['post_image'];
+                        $post_content   =   $row['post_content'];
                     ?>
 
             <h1 class="page-header">
@@ -45,21 +45,31 @@
             <?php
                 if(isset($_POST['create_comment']))
                 {
-                    $the_post_id = $_GET['p_id'];
-                    $comment_author = $_POST['comment_author'];
-                    $comment_email = $_POST['comment_email'];
-                    $comment_content = $_POST['comment_content'];
+                    $the_post_id        =   $_GET['p_id'];
+                    $comment_author     =   $_POST['comment_author'];
+                    $comment_email      =   $_POST['comment_email'];
+                    $comment_content    =   $_POST['comment_content'];
 
-                    $query = "INSERT INTO comments(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
-                    $query .= "VALUES($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
 
-                    $comment_query = mysqli_query($connection, $query);
+                    // Validation to Comment
+                    if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content))
+                    {
+                        $query   = "INSERT INTO comments(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
+                        $query .= "VALUES($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
 
-                    comfirmQuery($comment_query);
+                        $comment_query = mysqli_query($connection, $query);
 
-                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                    $query .= "WHERE post_id = $the_post_id";
-                    $update_comment_count = mysqli_query($connection, $query);
+                        comfirmQuery($comment_query);
+
+                        $query  = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                        $query .= "WHERE post_id = $the_post_id";
+                        $update_comment_count = mysqli_query($connection, $query);
+                    }
+                    // else {
+                    //     echo "<script>alert('Field cannot be empty')</script>";
+                    // }
+
+                    
                 }
             ?>
             <!-- Comments Form -->
@@ -68,15 +78,15 @@
                 <form action="" method="post" role="form">
                     <div class="form-group">
                         <label for="comment_author">Name</label>
-                        <input type="text" name="comment_author" class="form-control">
+                        <input type="text" name="comment_author" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="comment_email">Email</label>
-                        <input type="email" name="comment_email" class="form-control">
+                        <input type="email" name="comment_email" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="comment_content">Your Comment</label>
-                        <textarea name="comment_content" class="form-control" rows="3"></textarea>
+                        <textarea name="comment_content" class="form-control" rows="3" required></textarea>
                     </div>
                     <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                 </form>

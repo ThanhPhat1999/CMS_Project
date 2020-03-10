@@ -20,12 +20,13 @@
                             $select_all_users_query = mysqli_query($connection, $query);
 
                             while($row = mysqli_fetch_assoc($select_all_users_query)){
-                                $user_id = $row['user_id'];
-                                $username = $row['username'];
+                                $user_id        = $row['user_id'];
+                                $username       = $row['username'];
                                 $user_firstname = $row['user_firstname'];
-                                $user_lastname = $row['user_lastname'];
-                                $user_email = $row['user_email'];
-                                $user_role = $row['user_role'];
+                                $user_lastname  = $row['user_lastname'];
+                                $user_email     = $row['user_email'];
+                                $user_role      = $row['user_role'];
+                                
                                 echo "<tr>";
                                 echo "<td>{$user_id}</td>";
                                 echo "<td>{$username}</td>";

@@ -10,25 +10,25 @@
         
         while($row = mysqli_fetch_assoc($select_user_by_id))
         {
-            $username = $row['username'];
-            $password = $row['password'];
-            $user_firstname = $row['user_firstname'];
-            $user_lastname = $row['user_lastname'];
-            $user_email = $row['user_email'];
-            $user_role = $row['user_role'];
+            $username           =   $row['username'];
+            $password           =   $row['password'];
+            $user_firstname     =   $row['user_firstname'];
+            $user_lastname      =   $row['user_lastname'];
+            $user_email         =   $row['user_email'];
+            $user_role          =   $row['user_role'];
         }
     }
     
     if(isset($_POST['update_user']))
     {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
-        $user_role = $_POST['user_role'];
+        $username       =   $_POST['username'];
+        $password       =   $_POST['password'];
+        $user_firstname =   $_POST['user_firstname'];
+        $user_lastname  =   $_POST['user_lastname'];
+        $user_email     =   $_POST['user_email'];
+        $user_role      =   $_POST['user_role'];
 
-        $query = "UPDATE users SET ";
+        $query  = "UPDATE users SET ";
         $query .= "username = '{$username}', ";
         $query .= "password = '{$password}', ";
         $query .= "user_firstname = '{$user_firstname}', ";
