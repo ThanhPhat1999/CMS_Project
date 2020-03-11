@@ -8,6 +8,12 @@
         $user_email     =   $_POST['user_email'];
         $user_role      =   $_POST['user_role'];
 
+        $hashFormat         = "$2y$10$";
+        $salt               = "iusesomescrazystrings22";
+        $hashF_and_salt     = $hashFormat . $salt;
+
+        $password = crypt($password, $hashF_and_salt);
+
         $query  = "INSERT INTO users(username, password, user_firstname, user_lastname, user_email, user_role) ";
         $query .= "VALUES('{$username}', '{$password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}')";
 

@@ -7,6 +7,16 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <?php
+
+                    // Start Pagination
+                    $post_query_count = "SELECT * FROM posts WHERE post_status = 'publish'";
+                    $find_count = mysqli_query($connection, $post_query_count);
+                    $count = mysqli_num_rows($find_count);
+
+                    $count = ceil($count / 2);
+
+                    // End Pagination
+
                     $query = "SELECT * FROM posts WHERE post_status = 'publish'";
                     $select_all_post_query = mysqli_query($connection, $query);
 
@@ -25,6 +35,7 @@
                     <small>Secondary Text</small>
                 </h1>
                 <!-- First Blog Post -->
+                <h2><?php echo $count;?></h2>
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id?>"><?php echo $post_title?></a>
                 </h2>
@@ -46,5 +57,15 @@
             <!-- Blog Sidebar Widgets Column -->
             <?php include "includes/sidebar.php"?>
         </div>
+            
+            <!-- Start Pagination -->
+            <ul class="pager">
+            <?php
+                for($i = 1; $i <= $count; $i++)
+                {
+                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                }
+            ?>
+            </ul>
         <!-- /.row -->
         <?php include "includes/footer.php"?>

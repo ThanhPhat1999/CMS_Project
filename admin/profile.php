@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">
                         Welcome to Admin
-                        <small>Author</small>
+                        <small><?php echo $_SESSION['username']?></small>
                     </h1>
                     <?php
                         // Lấy dữ liệu lên dựa theo username sử dụng SESSION
@@ -25,26 +25,33 @@
 
                             while($row = mysqli_fetch_assoc($select_user_profile_query))
                             {
-                                $user_id = $row['user_id'];
-                                $username = $row['username'];
-                                $password = $row['password'];
-                                $user_firstname = $row['user_firstname'];
-                                $user_lastname = $row['user_lastname'];
-                                $user_email = $row['user_email'];
-                                $user_role = $row['user_role'];
+                                $user_id        =   $row['user_id'];
+                                $username       =   $row['username'];
+                                $password       =   $row['password'];
+                                $user_firstname =   $row['user_firstname'];
+                                $user_lastname  =   $row['user_lastname'];
+                                $user_email     =   $row['user_email'];
+                                $user_role      =   $row['user_role'];
                             }
                         }
 
                         if(isset($_POST['update_profile']))
                         {
-                            $username = $_POST['username'];
-                            $password = $_POST['password'];
-                            $user_firstname = $_POST['user_firstname'];
-                            $user_lastname = $_POST['user_lastname'];
-                            $user_email = $_POST['user_email'];
-                            $user_role = $_POST['user_role'];
+                            $username           =   $_POST['username'];
+                            $password           =   $_POST['password'];
+                            $user_firstname     =   $_POST['user_firstname'];
+                            $user_lastname      =   $_POST['user_lastname'];
+                            $user_email         =   $_POST['user_email'];
+                            $user_role          =   $_POST['user_role'];
 
-                            $query = "UPDATE users SET ";
+
+                            $hashFormat     = "$2y$10$";
+                            $salt           = "iusesomescrazystrings22";
+                            $hashF_and_salt = $hashFormat . $salt;
+
+                            $password = crypt($password, $hashF_and_salt);
+
+                            $query  = "UPDATE users SET ";
                             $query .= "username = '{$username}', ";
                             $query .= "password = '{$password}', ";
                             $query .= "user_firstname = '{$user_firstname}', ";
