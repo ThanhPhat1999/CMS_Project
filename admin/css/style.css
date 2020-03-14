@@ -15,3 +15,7 @@
     }
 }
 
+.pager li .active_link {
+    background-color: rgb(185, 185, 185);
+}
+

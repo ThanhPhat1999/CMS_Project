@@ -9,15 +9,33 @@
                 <?php
 
                     // Start Pagination
+                    $per_page = 2;
+
+                    if(isset($_GET['page']))
+                    {
+                        $page = $_GET['page'];
+                    }
+                    else {
+                        $page = " ";
+                    }
+
+                    if($page == " " || $page == 1)
+                    {
+                        $page_1 = 0;
+                    }
+                    else {
+                        $page_1 = ($page * $per_page) - $per_page;
+                    }
+
                     $post_query_count = "SELECT * FROM posts WHERE post_status = 'publish'";
                     $find_count = mysqli_query($connection, $post_query_count);
                     $count = mysqli_num_rows($find_count);
 
-                    $count = ceil($count / 2);
+                    $count = ceil($count / $per_page);
 
                     // End Pagination
 
-                    $query = "SELECT * FROM posts WHERE post_status = 'publish'";
+                    $query = "SELECT * FROM posts WHERE post_status = 'publish' LIMIT $page_1, $per_page";
                     $select_all_post_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_post_query))
@@ -35,7 +53,6 @@
                     <small>Secondary Text</small>
                 </h1>
                 <!-- First Blog Post -->
-                <h2><?php echo $count;?></h2>
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id?>"><?php echo $post_title?></a>
                 </h2>
@@ -63,7 +80,13 @@
             <?php
                 for($i = 1; $i <= $count; $i++)
                 {
-                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                    if($i == $page)
+                    {
+                        echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                    }
+                    else {
+                        echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                    }
                 }
             ?>
             </ul>

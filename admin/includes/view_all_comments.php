@@ -16,7 +16,34 @@
     </thead>
     <tbody>
         <?php
-                            $query = "SELECT * FROM comments";
+                            // Start Pagination
+                            $per_page = 7;
+
+                            if(isset($_GET['page']))
+                            {
+                                $page = $_GET['page'];
+                            }
+                            else {
+                                $page = " ";
+                            }
+
+                            if($page == " " || $page == 1)
+                            {
+                                $page_1 = 0;
+                            }
+                            else {
+                                $page_1 = ($page * $per_page) - $per_page;
+                            }
+
+                            $comment_query_count = "SELECT * FROM comments";
+                            $find_count = mysqli_query($connection, $comment_query_count);
+                            $count = mysqli_num_rows($find_count);
+
+                            $count = ceil($count / $per_page);
+
+                            // End Pagination
+
+                            $query = "SELECT * FROM comments LIMIT $page_1, $per_page";
                             $select_all_posts_query = mysqli_query($connection, $query);
 
                             while($row = mysqli_fetch_assoc($select_all_posts_query)){
@@ -96,3 +123,13 @@
     </tbody>
 </table>
 </div>
+
+<ul class="pager">
+    <?php
+        for ($i=1; $i <= $count; $i++) {
+            echo "<li><a href='comments.php?page={$i}'>{$i}</a></li>";
+        }
+
+    ?>
+    
+</ul>
