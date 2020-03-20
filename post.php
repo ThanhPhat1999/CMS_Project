@@ -10,6 +10,13 @@
                     if(isset($_GET['p_id']))
                     {
                         $the_post_id = $_GET['p_id'];
+
+                        $query  = "UPDATE posts SET post_views_count = post_views_count + 1 ";
+                        $query .= "WHERE post_id = {$the_post_id}";
+
+                        $select_views_query = mysqli_query($connection, $query);
+
+                        comfirmQuery($select_views_query);
                     }
                     $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
                     $select_all_post_query = mysqli_query($connection, $query);
@@ -54,16 +61,16 @@
                     // Validation to Comment
                     if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content))
                     {
-                        $query   = "INSERT INTO comments(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
+                        $query  = "INSERT INTO comments(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
                         $query .= "VALUES($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
 
                         $comment_query = mysqli_query($connection, $query);
 
                         comfirmQuery($comment_query);
 
-                        $query  = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                        $query .= "WHERE post_id = $the_post_id";
-                        $update_comment_count = mysqli_query($connection, $query);
+                        // $query  = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                        // $query .= "WHERE post_id = $the_post_id";
+                        // $update_comment_count = mysqli_query($connection, $query);
                     }
                     // else {
                     //     echo "<script>alert('Field cannot be empty')</script>";
