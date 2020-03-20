@@ -1,5 +1,18 @@
-<!-- Bulk Options -->
-<?php
+<?php include "includes/header.php"?>
+<div id="wrapper">
+    <!-- Navigation -->
+    <?php include "includes/navigation.php"?>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Welcome to Posts
+                        <small><?php if(isset($_SESSION['username'])) {echo $_SESSION['username'];}?></small>
+                    </h1>
+                    <!-- Bulk Options -->
+                    <?php
     if(isset($_POST['checkBoxArray']))
     {
         foreach ($_POST['checkBoxArray'] as $commentValueId) {
@@ -27,67 +40,44 @@
         }
     }
 ?>
-<form action="" method="post">
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <div id="bulkOptionContainer" class="col-xs-4 form-group">
-                <select name="bulkOptions" id="" class="form-control">
-                    <option value="">Select Options</option>
-                    <option value="approved">Approved</option>
-                    <option value="unapproved">Unapproved</option>
-                    <option value="delete">Delete</option>
-                </select>
-            </div>
-            <div class="col-xs-4">
-                <input type="submit" value="Apply" name="submit" class="btn btn-success">
-            </div>
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="selectAllBoxes"></th>
-                    <th>Author</th>
-                    <th>Comment</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th>In Response to</th>
-                    <th>Date</th>
-                    <th>Approve</th>
-                    <th>Unapprove</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                            // Start Pagination
-                            $per_page = 6;
+                    <form action="" method="post">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <div id="bulkOptionContainer" class="col-xs-4 form-group">
+                                    <select name="bulkOptions" id="" class="form-control">
+                                        <option value="">Select Options</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="unapproved">Unapproved</option>
+                                        <option value="delete">Delete</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="submit" value="Apply" name="submit" class="btn btn-success">
+                                </div>
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="selectAllBoxes"></th>
+                                        <th>Author</th>
+                                        <th>Comment</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>In Response to</th>
+                                        <th>Date</th>
+                                        <th>Approve</th>
+                                        <th>Unapprove</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 
-                            if(isset($_GET['page']))
-                            {
-                                $page = $_GET['page'];
-                            }
-                            else {
-                                $page = " ";
-                            }
+                            $query = "SELECT * FROM comments WHERE comment_post_id =" .mysqli_real_escape_string($connection, $_GET['id']). " ";
+                            $select_all_comments_query = mysqli_query($connection, $query);
 
-                            if($page == " " || $page == 1)
-                            {
-                                $page_1 = 0;
-                            }
-                            else {
-                                $page_1 = ($page * $per_page) - $per_page;
-                            }
+                            comfirmQuery($select_all_comments_query);
+                            
 
-                            $comment_query_count = "SELECT * FROM comments";
-                            $find_count = mysqli_query($connection, $comment_query_count);
-                            $count = mysqli_num_rows($find_count);
-
-                            $count = ceil($count / $per_page);
-
-                            // End Pagination
-
-                            $query = "SELECT * FROM comments LIMIT $page_1, $per_page";
-                            $select_all_posts_query = mysqli_query($connection, $query);
-
-                            while($row = mysqli_fetch_assoc($select_all_posts_query)){
+                            while($row = mysqli_fetch_assoc($select_all_comments_query)){
                                 $comment_id         =   $row['comment_id'];
                                 $comment_post_id    =   $row['comment_post_id'];
                                 $comment_author     =   $row['comment_author'];
@@ -95,14 +85,15 @@
                                 $comment_email      =   $row['comment_email'];
                                 $comment_status     =   $row['comment_status'];
                                 $comment_date       =   $row['comment_date'];
-
+                                
                                 echo "<tr>";
                                 ?>
 
-                <td><input type="checkbox" class="checkBoxes" name="checkBoxArray[]" value="<?php echo $comment_id?>">
-                </td>
+                                    <td><input type="checkbox" class="checkBoxes" name="checkBoxArray[]"
+                                            value="<?php echo $comment_id?>">
+                                    </td>
 
-                <?php 
+                                    <?php 
                                 echo "<td>{$comment_author}</td>";
                                 echo "<td>{$comment_content}</td>";
                                 echo "<td>{$comment_email}</td>";
@@ -125,8 +116,9 @@
                                 echo "<td><a onClick = \"javascript: return confirm('Are you sure you want to delete ?');\" href = 'comments.php?delete=$comment_id'>Delete</a></td>";
                                 echo "</tr>";
                             }
+                            
                         ?>
-                <?php
+                                    <?php
             if(isset($_GET['approve']))
             {
                 $the_status_approve_id = $_GET['approve'];
@@ -166,17 +158,16 @@
                 header("Location: comments.php");
             }
         ?>
-            </tbody>
-        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
     </div>
-</form>
-
-<ul class="pager">
-    <?php
-        for ($i=1; $i <= $count; $i++) {
-            echo "<li><a href='comments.php?page={$i}'>{$i}</a></li>";
-        }
-
-    ?>
-
-</ul>
+    <!-- /#page-wrapper -->
+    <!-- /#wrapper -->
+    <?php include "includes/footer.php"?>
