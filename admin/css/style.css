@@ -22,7 +22,7 @@
 
 
 /* Start Loader */
-#load-screen {
+/* #load-screen {
     background: url(../images/header-back.png);
     position: fixed;
     z-index: 10000;
@@ -39,7 +39,7 @@
     background: url(../images/loader.gif);
     background-size: 40%;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; */
 } /* End Loader */
     
 

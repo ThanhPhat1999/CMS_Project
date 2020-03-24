@@ -43,14 +43,9 @@
 
                             echo "<p class='bg-success'>Đăng kí thành công</p>";
                         }
-                        // else {
-                        //     echo "<script>alert('Đề nghị nhập đầy đủ nha')</script>";
-                        // }
-
                         
                     }
                 ?>
-
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
