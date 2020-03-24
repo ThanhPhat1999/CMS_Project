@@ -37,10 +37,12 @@ setInterval(function(){
 },500);
 
 // Loader
-var div_box = "<div id='load-screen'><div id='loading'></div></div>";
+// var div_box = "<div id='load-screen'><div id='loading'></div></div>";
 
-$("body").prepend(div_box);
+// $("body").prepend(div_box);
 
-$('#load-screen').delay(700).fadeOut(600, function(){
-    $(this).remove();
-})
+// $('#load-screen').delay(700).fadeOut(600, function(){
+//     $(this).remove();
+// })
+
+

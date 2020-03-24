@@ -50,6 +50,9 @@
     <!-- <script src="js/jquery.js"></script> -->
     
     <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
     
 </head>
 <body>

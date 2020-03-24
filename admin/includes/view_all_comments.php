@@ -1,5 +1,6 @@
 <!-- Bulk Options -->
 <?php
+    include("delete_modal.php");
     if(isset($_POST['checkBoxArray']))
     {
         foreach ($_POST['checkBoxArray'] as $commentValueId) {
@@ -122,7 +123,7 @@
                                 echo "<td>{$comment_date}</td>";
                                 echo "<td><a href = 'comments.php?approve=$comment_id'>Approve</a></td>";
                                 echo "<td><a href = 'comments.php?unapprove=$comment_id'>Unapprove</a></td>";
-                                echo "<td><a onClick = \"javascript: return confirm('Are you sure you want to delete ?');\" href = 'comments.php?delete=$comment_id'>Delete</a></td>";
+                                echo "<td><a class = 'delete_link' rel = '$comment_id' href = 'javascript:void(0)'>Delete</a></td>";
                                 echo "</tr>";
                             }
                         ?>
@@ -176,7 +177,19 @@
         for ($i=1; $i <= $count; $i++) {
             echo "<li><a href='comments.php?page={$i}'>{$i}</a></li>";
         }
-
     ?>
-
 </ul>
+
+<!-- Confirm Delete Modal -->
+<script>
+    $(document).ready(function(){
+        $(".delete_link").on('click', function(){
+            id = $(this).attr("rel");
+            delete_url = "comments.php?delete="+ id +"";
+
+            $(".modal_delete_link").attr('href', delete_url);
+
+            $("#myModal").modal('show');
+        })
+    })
+</script>

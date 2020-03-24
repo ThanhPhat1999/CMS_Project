@@ -111,9 +111,9 @@
                                 }
                                 
                                 echo "<td>{$comment_date}</td>";
-                                echo "<td><a href = 'comments.php?approve=$comment_id'>Approve</a></td>";
-                                echo "<td><a href = 'comments.php?unapprove=$comment_id'>Unapprove</a></td>";
-                                echo "<td><a onClick = \"javascript: return confirm('Are you sure you want to delete ?');\" href = 'comments.php?delete=$comment_id'>Delete</a></td>";
+                                echo "<td><a href = 'post_comments.php?approve=$comment_id&id=" . $_GET['id'] . "'>Approve</a></td>";
+                                echo "<td><a href = 'post_comments.php?unapprove=$comment_id&id=" . $_GET['id'] . "'>Unapprove</a></td>";
+                                echo "<td><a onClick = \"javascript: return confirm('Are you sure you want to delete ?');\" href = 'post_comments.php?delete=$comment_id&id=" . $_GET['id'] . "'>Delete</a></td>";
                                 echo "</tr>";
                             }
                             
@@ -129,7 +129,7 @@
 
                 comfirmQuery($the_status_approve_query);
 
-                header("Location: comments.php");
+                header("Location: post_comments.php?id=". $_GET['id'] ."");
             }
 
             if(isset($_GET['unapprove']))
@@ -142,7 +142,7 @@
 
                 comfirmQuery($the_status_unapprove_query);
                 
-                header("Location: comments.php");
+                header("Location: post_comments.php?id=". $_GET['id'] ."");
             }
 
             if(isset($_GET['delete']))
@@ -155,7 +155,7 @@
 
                 comfirmQuery($delete_comment_query);
 
-                header("Location: comments.php");
+                header("Location: post_comments.php?id=" . $_GET['id'] . "");
             }
         ?>
                                 </tbody>
