@@ -1,7 +1,7 @@
 <?php
     if(isset($_GET['p_id']))
     {
-        $the_user_id = $_GET['p_id'];
+        $the_user_id = escape($_GET['p_id']);
 
         $query = "SELECT * FROM users WHERE user_id = {$the_user_id}";
         $select_user_by_id = mysqli_query($connection, $query);
@@ -21,12 +21,12 @@
     
     if(isset($_POST['update_user']))
     {
-        $username       =   $_POST['username'];
-        $password       =   $_POST['password'];
-        $user_firstname =   $_POST['user_firstname'];
-        $user_lastname  =   $_POST['user_lastname'];
-        $user_email     =   $_POST['user_email'];
-        $user_role      =   $_POST['user_role'];
+        $username       =   escape($_POST['username']);
+        $password       =   escape($_POST['password']);
+        $user_firstname =   escape($_POST['user_firstname']);
+        $user_lastname  =   escape($_POST['user_lastname']);
+        $user_email     =   escape($_POST['user_email']);
+        $user_role      =   escape($_POST['user_role']);
 
         $hashFormat     = "$2y$10$";
         $salt           = "iusesomescrazystrings22";

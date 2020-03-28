@@ -11,23 +11,48 @@
                 <h1>Contact</h1>
 
                 <?php
-                    $msg = "First line of text\nSecond line of text";
-
-                    // use wordwrap() if lines are longer than 70 characters
-                    $msg = wordwrap($msg,70);
-                    
-                    // send email
-                    mail("thanhphat19@gmail.com","My subject",$msg);
+                    use PHPMailer\PHPMailer\PHPMailer;
+                    use PHPMailer\PHPMailer\Exception;
 
                     if(isset($_POST['submit']))
                     {
-                        $to         = "thanhphat19@gmail.com";
+                        $to         = "PhatNNTGCS17275@fpt.edu.vn";
                         $subject    = $_POST['subject'];
                         $body       = $_POST['body'];
+                        $email      = $_POST['email'];
+
+                        require_once('includes/PHPMailer/src/PHPMailer.php');
+                        require_once('includes/PHPMailer/src/Exception.php');
+                        require_once('includes/PHPMailer/src/SMTP.php');
+
+                        $mail = new PHPMailer();
+                        $mail ->isSMTP();
+                        $mail ->SMTPAuth = true;
+                        $mail ->SMTPSecure = 'ssl';
+                        $mail ->Host = 'smtp.gmail.com';
+                        $mail ->Port = '465';
+                        $mail ->isHTML();
+                        $mail ->Username = 'thanhphat19@gmail.com';
+                        $mail ->Password = 'Thanhphat0937994252';
+                        $mail ->SetFrom($email);
+                        $mail ->AddReplyTo($email);
+                        $mail ->Subject = $subject;
+                        $mail ->Body = $body;
+                        $mail ->AddAddress($to);
+
+                        $mail ->Send();
+
+                        if($mail->Send())
+                        {
+                            echo "<p class='bg-success'>Send mail successful</p>";
+                        }
+                        else {
+                            echo "<p class='bg-danger'>Send mail failed</p>";
+                        }
                     }
                 ?>
 
-                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                    <form role="form" action="contact.php" method="post" id="login-form" autocomplete="off">
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
@@ -48,10 +73,6 @@
         </div> <!-- /.row -->
     </div> <!-- /.container -->
 </section>
-
-
-        <hr>
-
-
-
+<hr>
+<!-- Footer -->
 <?php include "includes/footer.php";?>

@@ -125,6 +125,7 @@
                             while($row = mysqli_fetch_assoc($select_all_posts_query)){
                                 $post_id            =   $row['post_id'];
                                 $post_author        =   $row['post_author'];
+                                $post_user          =   $row['post_user'];
                                 $post_title         =   $row['post_title'];
                                 $post_category_id   =   $row['post_category_id'];
                                 $post_status        =   $row['post_status'];
@@ -141,8 +142,8 @@
                                 <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id;?>'></td>
 
                                 <?php
-                                // echo "<td>{$post_id}</td>";
-                                echo "<td>{$post_author}</td>";
+                                
+                                echo "<td>{$post_user}</td>";
                                 echo "<td>{$post_title}</td>";
                             
 
@@ -178,10 +179,13 @@
             // Delete Post
             if(isset($_GET['delete']))
             {
-                $the_post_id = $_GET['delete'];
+                $the_post_id = escape($_GET['delete']);
 
                 $query  = "DELETE posts, comments FROM posts INNER JOIN comments ON posts.post_id = comments.comment_post_id ";
                 $query .= "WHERE post_id = {$the_post_id}";
+
+                // $query  = "DELETE posts FROM posts LEFT JOIN comments ON posts.post_id = comments.comment_post_id ";
+                // $query .= "WHERE comments.comment_post_id IS NULL";
 
                 $delete_post_query = mysqli_query($connection, $query);
 

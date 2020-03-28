@@ -71,3 +71,10 @@
     </div>
     <!-- /.navbar-collapse -->
 </nav>
+
+<script>
+    function changeLanguage()
+    {
+        document.getElementById('language_form').submit();
+    }
+</script>
