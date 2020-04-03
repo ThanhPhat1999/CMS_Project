@@ -32,8 +32,8 @@
                         $mail ->Host = 'smtp.gmail.com';
                         $mail ->Port = '465';
                         $mail ->isHTML();
-                        $mail ->Username = 'thanhphat19@gmail.com';
-                        $mail ->Password = 'Thanhphat0937994252';
+                        $mail ->Username = 'Nhập email';
+                        $mail ->Password = 'Nhập pass email';
                         $mail ->SetFrom($email);
                         $mail ->AddReplyTo($email);
                         $mail ->Subject = $subject;

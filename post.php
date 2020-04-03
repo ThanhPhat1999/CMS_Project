@@ -9,7 +9,7 @@
             <?php
                     if(isset($_GET['p_id']))
                     {
-                        $the_post_id = $_GET['p_id'];
+                        $the_post_id    =   escape($_GET['p_id']);
 
                         $query  = "UPDATE posts SET post_views_count = post_views_count + 1 ";
                         $query .= "WHERE post_id = {$the_post_id}";
@@ -17,9 +17,25 @@
                         $select_views_query = mysqli_query($connection, $query);
 
                         comfirmQuery($select_views_query);
+                    
+
+                    if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
+                    {
+                        $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
                     }
-                    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
-                    $select_all_post_query = mysqli_query($connection, $query);
+                    else 
+                    {
+                        $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND post_status = 'publish'";
+                    }
+                        $select_all_post_query = mysqli_query($connection, $query);
+                        $count                 = mysqli_num_rows($select_all_post_query);
+                    
+                    if($count < 1)
+                    {
+                        echo "<h1 class='text-center'>No Posts Available</h1>";
+                    }
+                    else {
+                    
 
                     while($row = mysqli_fetch_assoc($select_all_post_query))
                     {
@@ -31,8 +47,7 @@
                     ?>
 
             <h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
+                Post
             </h1>
             <!-- First Blog Post -->
             <h2>
@@ -52,10 +67,10 @@
             <?php
                 if(isset($_POST['create_comment']))
                 {
-                    $the_post_id        =   $_GET['p_id'];
-                    $comment_author     =   $_POST['comment_author'];
-                    $comment_email      =   $_POST['comment_email'];
-                    $comment_content    =   $_POST['comment_content'];
+                    $the_post_id        =   escape($_GET['p_id']);
+                    $comment_author     =   escape($_POST['comment_author']);
+                    $comment_email      =   escape($_POST['comment_email']);
+                    $comment_content    =   escape($_POST['comment_content']);
 
 
                     // Validation to Comment
@@ -101,7 +116,7 @@
 
             <hr>
             <?php
-                $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} ";
+                $query  = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} ";
                 $query .= "AND comment_status = 'Approved' ";
                 $query .= "ORDER BY comment_id DESC ";
 
@@ -111,9 +126,9 @@
 
                 while($row = mysqli_fetch_array($show_comment_query))
                 {
-                    $comment_author = $row['comment_author'];
-                    $comment_date = $row['comment_date'];
-                    $comment_content = $row['comment_content'];
+                    $comment_author     =   $row['comment_author'];
+                    $comment_date       =   $row['comment_date'];
+                    $comment_content    =   $row['comment_content'];
                     ?>
             <!-- Posted Comments -->
 
@@ -129,7 +144,9 @@
                     <?php echo $comment_content;?>
                 </div>
             </div>
-            <?php }?>
+            <?php }}} else {
+                    header("Location: index.php");
+                }?>
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <?php include "includes/sidebar.php"?>

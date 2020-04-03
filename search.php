@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_POST['submit']))
                     {
-                        $search = $_POST['search'];
+                        $search = escape($_POST['search']);
 
                         $query  = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
 
@@ -24,7 +24,7 @@
 
                         if($count == 0)
                         {
-                            echo "<h1>NO RESULT</h1>";
+                            echo "<h1 class='text-center'>NO RESULT</h1>";
                         }
                         else {
                             while($row = mysqli_fetch_assoc($search_query))

@@ -27,9 +27,23 @@
                         $page_1 = ($page * $per_page) - $per_page;
                     }
 
-                    $post_query_count = "SELECT * FROM posts WHERE post_status = 'publish'";
+                    if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
+                    {
+                        $post_query_count = "SELECT * FROM posts";
+                    }
+                    else {
+                        $post_query_count = "SELECT * FROM posts WHERE post_status = 'publish'";
+                    }
+
+                   
                     $find_count = mysqli_query($connection, $post_query_count);
                     $count = mysqli_num_rows($find_count);
+
+                    if($count < 1)
+                    {
+                        echo "<h1 class='text-center'>No Posts Available</h1>";
+                    }
+                    else {
 
                     $count = ceil($count / $per_page);
 
@@ -45,12 +59,12 @@
                         $post_user      =   $row['post_user'];
                         $post_date      =   $row['post_date'];
                         $post_image     =   $row['post_image'];
-                        $post_content   =   substr($row['post_content'],0, 250);
+                        $post_content   =   substr($row['post_content'],0, 400);
+                        $post_status    =   $row['post_status'];
                     ?>
 
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Posts
                 </h1>
                 <!-- First Blog Post -->
                 <h2>
@@ -68,7 +82,7 @@
                 <p><?php echo $post_content?></p>
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id?>">Read More <span
                         class="glyphicon glyphicon-chevron-right"></span></a>
-                <?php }?>
+                <?php }}?>
                 <hr>
             </div>
             <!-- Blog Sidebar Widgets Column -->

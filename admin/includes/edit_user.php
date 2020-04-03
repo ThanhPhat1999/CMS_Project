@@ -17,7 +17,7 @@
             $user_email         =   $row['user_email'];
             $user_role          =   $row['user_role'];
         }
-    }
+    
     
     if(isset($_POST['update_user']))
     {
@@ -28,26 +28,36 @@
         $user_email     =   escape($_POST['user_email']);
         $user_role      =   escape($_POST['user_role']);
 
-        $hashFormat     = "$2y$10$";
-        $salt           = "iusesomescrazystrings22";
-        $hashF_and_salt = $hashFormat . $salt;
+            if(!empty($password))
+            {
+                $password_query = "SELECT password FROM users WHERE user_id = {$the_user_id}";
+                $get_user_query = mysqli_query($connection, $password_query);
 
-        $password = crypt($password, $hashF_and_salt);
+                $row = mysqli_fetch_array($get_user_query);
+                $db_password =  $row['password'];
 
-        $query  = "UPDATE users SET ";
-        $query .= "username = '{$username}', ";
-        $query .= "password = '{$password}', ";
-        $query .= "user_firstname = '{$user_firstname}', ";
-        $query .= "user_lastname = '{$user_lastname}', ";
-        $query .= "user_email = '{$user_email}', ";
-        $query .= "user_role = '{$user_role}' ";
-        $query .= "WHERE user_id = {$the_user_id}";
+                if($db_password != $password)
+                {
+                    $hash_password       =   password_hash($password, PASSWORD_BCRYPT, array('cost' => 10));
+                }
+                $query  = "UPDATE users SET ";
+                $query .= "username = '{$username}', ";
+                $query .= "password = '{$hash_password}', ";
+                $query .= "user_firstname = '{$user_firstname}', ";
+                $query .= "user_lastname = '{$user_lastname}', ";
+                $query .= "user_email = '{$user_email}', ";
+                $query .= "user_role = '{$user_role}' ";
+                $query .= "WHERE user_id = {$the_user_id}";
 
-        $update_user_query = mysqli_query($connection ,$query);
-        
-        comfirmQuery($update_user_query);
-
-        header("Location: users.php");
+                $update_user_query = mysqli_query($connection ,$query);
+                
+                comfirmQuery($update_user_query);
+                header("Location: users.php");
+            }   
+        }
+    }
+    else {
+        header("Location: index.php");
     }
 ?>
 <form action="" method="post">
@@ -57,7 +67,7 @@
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" name="password" value="<?php if(isset($password)) { echo $password;}?>" class="form-control">
+        <input type="password" value="<?php if(isset($password)) { echo $password;}?>" name="password" class="form-control">
     </div>
     <div class="form-group">
         <label for="post_category_id">Role</label>

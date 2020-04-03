@@ -25,9 +25,9 @@
             $db_user_role       =   $row['user_role'];
         }
 
-        $password = crypt($password, $db_password);
+        // $password = crypt($password, $db_password);
 
-        if($username === $db_username && $password === $db_password)
+        if($username === $db_username && password_verify($password, $db_password))
         {
             $_SESSION['username']       =   $db_username;
             $_SESSION['password']       =   $db_password;

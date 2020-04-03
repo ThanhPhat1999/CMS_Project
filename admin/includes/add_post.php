@@ -71,8 +71,8 @@
         <label for="post_status">Post Status</label>
         <select name="post_status" id="" class="form-control">
             <option value="">Select Options</option>
-            <option value="Publish">Publish</option>
-            <option value="Draft">Draft</option>
+            <option value="publish">Publish</option>
+            <option value="draft">Draft</option>
         </select>
     </div>
     <div class="form-group">

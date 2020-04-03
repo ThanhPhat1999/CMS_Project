@@ -47,17 +47,19 @@
                         
                         if(!empty($username) && !empty($password) && !empty($email))
                         {
-                            $query = "SELECT randSalt FROM users";
-                            $select_randsalt_query = mysqli_query($connection, $query);
+                            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-                            if(!$select_randsalt_query)
-                            {
-                                die("Query Failed!" .mysqli_error($select_randsalt_query));
-                            }
+                            // $query = "SELECT randSalt FROM users";
+                            // $select_randsalt_query = mysqli_query($connection, $query);
 
-                            $row  = mysqli_fetch_array($select_randsalt_query);
-                            $salt = $row['randSalt'];
-                            $password = crypt($password, $salt);
+                            // if(!$select_randsalt_query)
+                            // {
+                            //     die("Query Failed!" .mysqli_error($select_randsalt_query));
+                            // }
+
+                            // $row  = mysqli_fetch_array($select_randsalt_query);
+                            // $salt = $row['randSalt'];
+                            // $password = crypt($password, $salt);
 
                             $query  = "INSERT INTO users(username, password, user_email, user_role)";
                             $query .= "VALUES('{$username}', '{$password}', '{$email}', 'Subscriber')";
@@ -69,7 +71,7 @@
                                 die("Query Failed!" .mysqli_error($connection));
                             }
 
-                            echo "<p class='bg-success'>Đăng kí thành công</p>";
+                            echo "<p class='bg-success'>Your registration has been submitted</p>";
                         }
                         
                     }

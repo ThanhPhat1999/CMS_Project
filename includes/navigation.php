@@ -25,13 +25,35 @@
                             $cate_id    =   $row['cat_id'];
                             $cate_title =   $row['cat_title'];
 
-                            echo " <li><a href='#'>{$cate_title}</a></li>";
+                            $category_class     = '';
+                            $contact_class      = '';
+                            $registration_class = ''; 
+
+                            $registration       = 'registration.php';
+                            $contact            = 'contact.php';
+
+                            $pageName = basename($_SERVER['PHP_SELF']);
+
+                            if(isset($_GET['category']) && $_GET['category'] == $cate_id)
+                            {
+                                $category_class = 'active';
+                            }
+                            else if ($pageName == $registration)
+                            {
+                                $registration_class = 'active';
+                            }
+                            else if ($pageName == $contact)
+                            {
+                                $contact_class = 'active';
+                            }
+
+                            echo " <li class = '$category_class'><a href='category.php?category={$cate_id}'>{$cate_title}</a></li>";
                         }
-                    ?>
+                ?>
                     
                 <li><a href="admin">Admin</a></li>
-                <li><a href="registration.php?lang=en">Registration</a></li>
-                <li><a href="contact.php">Contact</a></li>
+                <li class = '<?php echo $registration_class?>'><a href="registration.php?lang=en">Registration</a></li>
+                <li class = '<?php echo $contact_class?>'><a href="contact.php">Contact</a></li>
 
                 <?php
                     if(isset($_SESSION['user_role']))
