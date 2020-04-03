@@ -37,7 +37,6 @@
             }
         } 
     }
-
     usersOnline();
 
     
@@ -111,6 +110,17 @@
                                         }
                                         header("Location: categories.php");
                                     }
+    }
+
+    function recordCount($table)
+    {
+        global $connection;
+
+        $query = "SELECT * FROM " .$table;
+        $select_record_count_query = mysqli_query($connection, $query);
+        $result = mysqli_num_rows($select_record_count_query);
+
+        return $result;
     }
 
 ?>

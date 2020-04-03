@@ -26,23 +26,27 @@
                     {
                         $post_title         =   $row['post_title'];
                         $post_categories    =   $row['post_category_id'];
-                        $post_author        =   $row['post_author'];
+                        $post_user          =   $row['post_user'];
                         $post_image         =   $row['post_image'];
                         $post_content       =   $row['post_content'];
                         $post_tags          =   $row['post_tags'];
                         $post_status        =   $row['post_status'];
                         $post_views_count   =   0;
-                    }
 
-                    $query  = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status, post_views_count) ";
-                    $query .= "VALUES({$post_categories}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}', {$post_views_count})";
+                        if(empty($post_tags))
+                        {
+                            $post_tags = "<p><b>No tags</b></p>";
+                        }
+
+                    }
+                    $query  = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status, post_views_count) ";
+                    $query .= "VALUES({$post_categories}, '{$post_title}', '{$post_user}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}', {$post_views_count})";
                     $copy_query = mysqli_query($connection, $query);
 
                     if(!$copy_query)
                     {
                         die("Query Failed!" .mysqli_error($connection));
                     }
-
                     break;
 
                 case 'delete':
@@ -160,7 +164,6 @@
                                 echo "<td>{$post_status}</td>";
                                 echo "<td><img src='../images/{$post_image}' width='100'/></td>";
                                 echo "<td>{$post_tags}</td>";
-
                                 $query = "SELECT * FROM comments WHERE comment_post_id = {$post_id}";
                                 $send_comment_query = mysqli_query($connection, $query);
                                 $count_comment = mysqli_num_rows($send_comment_query);
