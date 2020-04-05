@@ -41,49 +41,60 @@
                 <?php
                     if(isset($_POST['submit']))
                     {
-                        $username = $_POST['username'];
-                        $password = $_POST['password'];
-                        $email    = $_POST['email'];
-                        
-                        if(!empty($username) && !empty($password) && !empty($email))
+                        $username   =   trim(escape($_POST['username']));
+                        $password   =   trim(escape($_POST['password']));
+                        $email      =   trim(escape($_POST['email']));
+
+                        $error = [
+                            'username'  =>  '',
+                            'password'  =>  '',
+                            'email'     =>  ''
+                        ];
+
+                        if(strlen($username) < 5)
                         {
-                            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-
-                            // $query = "SELECT randSalt FROM users";
-                            // $select_randsalt_query = mysqli_query($connection, $query);
-
-                            // if(!$select_randsalt_query)
-                            // {
-                            //     die("Query Failed!" .mysqli_error($select_randsalt_query));
-                            // }
-
-                            // $row  = mysqli_fetch_array($select_randsalt_query);
-                            // $salt = $row['randSalt'];
-                            // $password = crypt($password, $salt);
-
-                            $query  = "INSERT INTO users(username, password, user_email, user_role)";
-                            $query .= "VALUES('{$username}', '{$password}', '{$email}', 'Subscriber')";
-
-                            $register_user_query = mysqli_query($connection, $query);
-
-                            if(!$register_user_query)
-                            {
-                                die("Query Failed!" .mysqli_error($connection));
-                            }
-
-                            echo "<p class='bg-success'>Your registration has been submitted</p>";
+                            $error['username'] = "Username needs to longer";
+                        } 
+                        else if ($username == '')
+                        {
+                            $error['username'] = "Username cannot be empty";
+                        }
+                        else if (username_exist($username))
+                        {
+                            $error['username'] = "This username already exists, pick another another. <a href='index.php'>Please Login</a>";
+                        }
+                        else if ($email == '')
+                        {
+                            $error['email']    = "Email cannot be empty";
+                        }
+                        else if (email_exist($email))
+                        {
+                            $error['email']    = "This email already exists, pick another another. <a href='index.php'>Please Login</a>";
+                        }
+                        else if ($password == '')
+                        {
+                            $error['password'] = "Password cannot be empty";
                         }
                         
+                        foreach ($error as $key => $value) {
+                            if(empty($value))
+                            {
+                                register_user($username, $email, $password);
+                                login_user($username, $password);
+                            }
+                        }
                     }
                 ?>
                     <form role="form" action="" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="<?php echo _USERNAME;?>" required>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="<?php echo _USERNAME;?>" autocomplete="on" 
+                            value="<?php echo isset($username) ? $username : ''?>" required>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="<?php echo _EMAIL;?>" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="<?php echo _EMAIL;?>" autocomplete="on" 
+                            value="<?php echo isset($email) ? $email : ''?>" required>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
@@ -101,10 +112,10 @@
         <hr>
 
         <script>
-    function changeLanguage()
-    {
-        document.getElementById('language_form').submit();
-    }
-</script>
+            function changeLanguage()
+            {
+                document.getElementById('language_form').submit();
+            }
+        </script>
 
 <?php include "includes/footer.php";?>

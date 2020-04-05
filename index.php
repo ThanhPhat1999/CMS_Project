@@ -49,7 +49,7 @@
 
                     // End Pagination
 
-                    $query = "SELECT * FROM posts WHERE post_status = 'publish' LIMIT $page_1, $per_page";
+                    $query = "SELECT * FROM posts LIMIT $page_1, $per_page";
                     $select_all_post_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_post_query))

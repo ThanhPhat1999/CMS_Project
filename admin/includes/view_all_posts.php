@@ -122,22 +122,23 @@
 
                             // End Pagination
 
-
-                            $query = "SELECT * FROM posts LIMIT $page_1, $per_page";
+                            $query  = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, ";
+                            $query .= "posts.post_category_id, categories.cat_id, categories.cat_title ";
+                            $query .= "FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id LIMIT $page_1, $per_page";
                             $select_all_posts_query = mysqli_query($connection, $query);
 
                             while($row = mysqli_fetch_assoc($select_all_posts_query)){
                                 $post_id            =   $row['post_id'];
-                                $post_author        =   $row['post_author'];
                                 $post_user          =   $row['post_user'];
                                 $post_title         =   $row['post_title'];
                                 $post_category_id   =   $row['post_category_id'];
                                 $post_status        =   $row['post_status'];
                                 $post_image         =   $row['post_image'];
                                 $post_tags          =   $row['post_tags'];
-                                $post_comment_count =   $row['post_comment_count'];
                                 $post_date          =   $row['post_date'];
                                 $post_views         =   $row['post_views_count'];
+                                $cat_id             =   $row['cat_id'];
+                                $cat_title          =   $row['cat_title'];
 
                                 echo "<tr>";
 
@@ -149,21 +150,12 @@
                                 
                                 echo "<td>{$post_user}</td>";
                                 echo "<td>{$post_title}</td>";
-                            
-
-                            $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
-                            $select_category_title = mysqli_query($connection, $query);
-
-                            while($row = mysqli_fetch_assoc($select_category_title))
-                            {
-                                $cat_id     = $row['cat_id'];
-                                $cat_title  = $row['cat_title'];
-                                
                                 echo "<td>{$cat_title}</td>";
-                            }
                                 echo "<td>{$post_status}</td>";
                                 echo "<td><img src='../images/{$post_image}' width='100'/></td>";
                                 echo "<td>{$post_tags}</td>";
+
+                                // Query đếm số comment của từng bài post
                                 $query = "SELECT * FROM comments WHERE comment_post_id = {$post_id}";
                                 $send_comment_query = mysqli_query($connection, $query);
                                 $count_comment = mysqli_num_rows($send_comment_query);

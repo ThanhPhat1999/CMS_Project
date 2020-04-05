@@ -1,7 +1,7 @@
+<?php ob_start();?>
 <?php session_start();?>
 
 <?php
-
     $_SESSION['username']       =   null;
     $_SESSION['password']       =   null;
     $_SESSION['user_firstname'] =   null;

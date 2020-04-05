@@ -114,26 +114,17 @@
 
                 <!-- Chart -->
                 <?php
-                    // POSTS
-                    $query = "SELECT * FROM posts WHERE post_status = 'draft'";
-                    $select_draft_posts_query = mysqli_query($connection, $query);
-                    $draft_post_count = mysqli_num_rows($select_draft_posts_query);
-                    comfirmQuery($select_draft_posts_query);
+                    // POSTS 
+                    $draft_post_count           = checkStatus('posts', 'post_status', 'draft');
 
                     // COMMENTS
-                    $query = "SELECT * FROM comments WHERE comment_status = 'Unapproved'";
-                    $select_unapprove_comments_query = mysqli_query($connection, $query);
-                    $unapprove_comment_count = mysqli_num_rows($select_unapprove_comments_query);
-                    comfirmQuery($select_unapprove_comments_query);
+                    $unapprove_comment_count    = checkStatus('comments', 'comment_status', 'Unapproved');
 
                     // USER SUBSCRIBER
-                    $query = "SELECT * FROM users WHERE user_role = 'Subscriber'";
-                    $select_user_sub_query = mysqli_query($connection, $query);
-                    $user_sub_count = mysqli_num_rows($select_user_sub_query);
-                    comfirmQuery($select_user_sub_query);
-                
-                
+                    
+                    $user_sub_count             = checkUserRole('users', 'user_role', 'Subscriber');
                 ?>
+                
                 <div class="row">
                     <script type="text/javascript">
                     google.charts.load('current', {
@@ -145,7 +136,7 @@
                         var data = google.visualization.arrayToDataTable([
                             ['Data', 'Count'],
                             <?php
-                                $element_text = ['Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
+                                $element_text  = ['Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
                                 $element_count = [$posts_count, $draft_post_count, $comments_count, $unapprove_comment_count, $users_count, $user_sub_count, $categories_count];
 
                                 for ($i=0; $i < 7; $i++) { 
