@@ -15,7 +15,7 @@
         $post_comment_count =   0;
         $post_views_count   =   0;
 
-        move_uploaded_file($post_image_temp, "../images/$post_image"); //di chuyển hình ảnh từ biến tạm sang biết $post_image
+        move_uploaded_file($post_image_temp, "../images/$post_image"); //di chuyển hình ảnh từ biến tạm sang biến $post_image
 
         $query  = "INSERT INTO posts(post_category_id, post_user, post_title, post_date, post_image, post_content, post_tags, post_comment_count, post_status, post_views_count) ";
         $query .= "VALUES({$post_category_id}, '{$post_user}', '{$post_title}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', {$post_comment_count}, '{$post_status}', {$post_views_count})";

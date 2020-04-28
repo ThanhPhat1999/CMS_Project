@@ -15,6 +15,13 @@
         return mysqli_real_escape_string($connection, trim($string));
     }
 
+    function redirect($file)
+    {
+        global $connection;
+
+        return header("Location: . $file");
+    }
+
     function username_exist($username)
     {
         global $connection;
@@ -50,26 +57,19 @@
     {
         global $connection;
 
-        if(username_exist($username))
+        $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
+        $query  = "INSERT INTO users(username, password, user_email, user_role)";
+        $query .= "VALUES('{$username}', '{$password}', '{$email}', 'Subscriber')";
+
+        $register_user_query = mysqli_query($connection, $query);
+
+        if(!$register_user_query)
         {
-
+            die("Query Failed!" .mysqli_error($connection));
         }
-        else if(!empty($username) && !empty($password) && !empty($email))
-        {
-            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-            $query  = "INSERT INTO users(username, password, user_email, user_role)";
-            $query .= "VALUES('{$username}', '{$password}', '{$email}', 'Subscriber')";
-
-            $register_user_query = mysqli_query($connection, $query);
-
-            if(!$register_user_query)
-            {
-                die("Query Failed!" .mysqli_error($connection));
-            }
-
-            echo "<p class='bg-success'>Your registration has been submitted</p>";
-        }
+        echo "<p class='bg-success'>Your registration has been submitted</p>";
     }
 
     function login_user($username, $password)
@@ -108,6 +108,22 @@
         }
         else {
             header("Location: ../index.php");
+        }
+    }
+
+    function is_admin($username = '')
+    {
+        global $connection;
+
+        $query  = "SELECT user_role FROM users WHERE username = '$username'";
+        $result = mysqli_query($connection, $query);
+
+        if($result == 'Admin')
+        {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 ?>
